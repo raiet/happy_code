@@ -62,11 +62,8 @@ void jisuan(){
 			j++;
 			direct = 1;
 			break;
-
 		
-		
-		}
-	
+		}	
 	
 	}
 
