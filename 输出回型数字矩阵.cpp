@@ -68,7 +68,7 @@ void jisuan(){
 	}
 
 }
-//Ö÷º¯Êı²âÊÔ
+
 int main(){
 	
 	jisuan();
