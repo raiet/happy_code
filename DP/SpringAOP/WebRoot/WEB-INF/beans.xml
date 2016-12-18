@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:mvc="http://www.springframework.org/schema/mvc"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                     http://www.springframework.org/schema/context
+                     http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                     http://www.springframework.org/schema/aop
+                     http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                     http://www.springframework.org/schema/mvc
+                     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+ 
+ 	 <!-- SimpleUrlHandlerMapping是基于url的控制器 -->
+     <bean class = "org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+     	<!-- 映射属性 -->
+     	<property name = "mappings">
+     		<!-- 映射键值对 -->
+     		<props>
+     			<!-- 当请求时start.test时，将控制交由startController这个controller处理 -->
+     			<prop key="login.do">loginController</prop>
+     		</props>
+     	</property>
+     </bean>
+ 
+ 	<bean id= "loginController" class = "hust.StartController"></bean>
+ 	<bean id = "user" class = "edu.hust.model.User"/>
+ 	
+ 	<bean id = "userDao" class = "edu.hust.dao.impl.UserDao"/>
+ 	
+	<bean id = "userService" class = "edu.hust.service.UserService">
+		<property name="userDao" value = "edu.hust.dao.impl.UserDao"></property>
+	</bean>
+	
+	<!-- resolve是一种策略,完成逻辑名称（字符串）到view真实视图的映射，真正的处理是由 viewclass来完成的-->
+    <!-- 基于url的视图解析器 ViewResolve & View 组件-->          
+    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+    	<!-- Resolver和view 要结合使用，这里试试使用jsp作为视图层，jstl在jsp显示的时候可以完成国际化的处理-->
+    	<!-- 在我们的例子中，viewclass 并没有做什么事情， -->
+    	<property name="viewClass" value = "org.springframework.web.servlet.view.JstlView"></property>
+    	<!-- 指定请求的前缀 -->
+    	<property name="prefix" value = "/WEB-INF/jsp/"></property>
+    	<!-- 指定请求的后缀 -->
+    	<property name="suffix" value = ".jsp"></property>
+    	
+    	 <!-- 对于名字为“start”的逻辑视图，按照上面的配置，会进行拼装成/WEB-INF/jsp/start.jsp,
+    	 在spring框架内部会使用request.forward()方法实现跳转 -->
+    </bean>
+
+
+
+</beans>
